@@ -72,9 +72,11 @@ renderBlogPosts(currentPage);
 updateNavigationButtons();
 
 function onAddPostButtonClick() {
-  const title = prompt('Enter the title of the new blog post:');
-  const content = prompt('Enter the content of the new blog post:');
+  document.getElementById('add-post-form').style.display = 'block';
+}
 
+function onAddPostFormSubmit(event) {
+  event.preventDefault();
   if (title && content) {
     blogPosts.unshift({ title, content });
     renderBlogPosts(currentPage);
@@ -82,9 +84,25 @@ function onAddPostButtonClick() {
   }
 }
 
+function onAddPostFormSubmit(event) {
+  event.preventDefault();
+
+  const title = document.getElementById('title-input').value;
+  const content = document.getElementById('content-input').value;
+
+  if (title && content) {
+    blogPosts.unshift({ title, content });
+    renderBlogPosts(currentPage);
+    updateNavigationButtons();
+
+    document.getElementById('add-post-form').style.display = 'none';
+  }
+}
+
 document.getElementById('prev-page-button').addEventListener('click', onPrevPageButtonClick);
 document.getElementById('next-page-button').addEventListener('click', onNextPageButtonClick);
 document.getElementById('add-post-button').addEventListener('click', onAddPostButtonClick);
+document.getElementById('add-post-form').addEventListener('submit', onAddPostFormSubmit);
 
 renderBlogPosts(currentPage);
 updateNavigationButtons();
